@@ -6,7 +6,13 @@
   "author": "almaz73@gmail.com",
   "action": {
     "default_popup": "panels/src_popup/index.html",
-    "default_icon": "img/icon.png"
+    "default_icon": {
+      "16": "img/16.png",
+      "32": "img/32.png",
+      "64": "img/64.png",
+      "128": "img/128.png",
+      "256": "img/256.png"
+    }
   },
   "options_ui": {
     "open_in_tab": true,

@@ -47,7 +47,7 @@ function getData(sendResponse) {
     sendResponse(data);
 
     chrome.runtime.sendMessage({"action": "openOptionsPage"}); // открываю вкладку опций
-    chrome.runtime.sendMessage({data}); // передаю все данные
+    chrome.runtime.sendMessage({"action": "showData", data}); // передаю все данные
 }
 
 function getAccount(sendResponse) {
@@ -60,62 +60,37 @@ function getAccount(sendResponse) {
     }
     sendResponse(nameAccount);
 
-
-
-}
-
-function setClosePosition(id) {
-    // сохраним в базе id обявления, чтобы отметить что обработано
-    let payload = {
-        "EntityId": 391867,
-        "entityType": 20,
-        "text": id
-    }
-    fetch("https://dev.autonet.pro/api/comment//", {
-        "headers": {
-            "accept": "application/json, text/plain, */*",
-            "content-type": "application/json;charset=UTF-8",
-            "sec-fetch-mode": "cors",
-            "sec-fetch-site": "same-origin",
-            "x-requested-with": "XMLHttpRequest"
-        },
-        "referrer": "https://dev.autonet.pro/",
-        "referrerPolicy": "strict-origin-when-cross-origin",
-        "body": payload,
-        "method": "POST",
-        "mode": "no-cors",
-        "credentials": "include"
-    });
-    // fetch("https://dev.autonet.pro/api/comment/20/391867", {
-    //     "headers": {
-    //         "accept": "application/json, text/plain, */*",
-    //         "accept-language": "ru,en-US;q=0.9,en;q=0.8,ru-RU;q=0.7",
-    //         "sec-ch-ua": "\"Not_A Brand\";v=\"8\", \"Chromium\";v=\"120\", \"Google Chrome\";v=\"120\"",
-    //         "sec-ch-ua-mobile": "?0",
-    //         "sec-ch-ua-platform": "\"Windows\"",
-    //         "sec-fetch-dest": "empty",
-    //         "sec-fetch-mode": "cors",
-    //         "sec-fetch-site": "same-origin",
-    //         "x-requested-with": "XMLHttpRequest"
-    //     },
-    //     "referrer": "https://dev.autonet.pro/",
-    //     "referrerPolicy": "strict-origin-when-cross-origin",
-    //     "body": null,
-    //     "method": "GET",
-    //     "mode": "cors",
-    //     "credentials": "include"
-    // });
+    chrome.runtime.sendMessage({"action": "setOperator", nameAccount}); // открываю вкладку опций
 
 }
 
+// function setClosePosition(id) {
+//     // сохраним в базе id обявления, чтобы отметить что обработано
+//     let payload = {
+//         "EntityId": 391867,
+//         "entityType": 20,
+//         "text": id
+//     }
+//     fetch("https://dev.autonet.pro/api/comment//", {
+//         "headers": {
+//             "accept": "application/json, text/plain, */*",
+//             "content-type": "application/json;charset=UTF-8",
+//             "sec-fetch-mode": "cors",
+//             "sec-fetch-site": "same-origin",
+//             "x-requested-with": "XMLHttpRequest"
+//         },
+//         "referrer": "https://dev.autonet.pro/",
+//         "referrerPolicy": "strict-origin-when-cross-origin",
+//         "body": payload,
+//         "method": "POST",
+//         "mode": "no-cors",
+//         "credentials": "include"
+//     });
+//
+// }
 
-if ('serviceWorker' in navigator) {
-    console.log('serviceWorker EУРА')
 
-    console.log('navigator.serviceWorker', navigator.serviceWorker)
-    // ensure service worker is ready, you can also put this into DOM 'ready' or 'load' event
+if ('serviceWorker' in navigator) console.log('serviceWorker заработал')
 
-
-}
 
 
