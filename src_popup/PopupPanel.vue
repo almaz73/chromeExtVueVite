@@ -106,9 +106,12 @@ if (!chrome.tabs) {
 }
 
 function openOptions() {
-  console.log(' = openOptions= = ')
+  console.log(' = openOptions= но буду открыать дургим спососбо= ')
 
-  chrome.runtime.openOptionsPage()
+  // chrome.runtime.openOptionsPage(avitoData); // открываем панель опций
+
+  // chrome.runtime.sendMessage('')
+
 }
 
 function search() {
@@ -157,6 +160,7 @@ function askData() {
 }
 
 
+
 function askAccount() {
   console.log('_ _ _ _ askAccount')
   sendQustionToContent({}, '2. Get my account', answerAccountName)
@@ -165,7 +169,9 @@ function askAccount() {
 function sendQustionToContent(params, question, callback) {
   // посылает запрос ко всем  вкладкам если в params не оговорено
   chrome.tabs.query(params, function (tabs) {
+    console.log('tabs.length', tabs.length)
     for (let i = 0; i < tabs.length; i++) {
+      console.log('tabs[i].id', tabs[i].id)
       chrome.tabs.sendMessage(tabs[i].id, question, callback);
     }
   })
@@ -175,8 +181,8 @@ function sendQustionToContent(params, question, callback) {
 function answerAccountName(val) {
   if (val === true) isNeedAvito.value = false
   if (val && val !== 'null' && val !== true) operatorName.value = val
-
   console.log('isNeedAvito.value', isNeedAvito.value)
+  chrome.runtime.sendMessage({">>>>> operatorName": operatorName.value}); // открываю вкладку опций
 }
 
 function answerAutoList(val) {

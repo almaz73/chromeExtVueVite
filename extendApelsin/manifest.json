@@ -12,11 +12,15 @@
     "open_in_tab": true,
     "page": "panels/src_options/index.html"
   },
+  "background": {
+    "service_worker": "sw.js"
+  },
   "permissions": [
     "tabs",
     "storage",
     "activeTab",
-    "scripting"
+    "scripting",
+    "offscreen"
   ],
   "content_security_policy": {
     "extension_pages": "script-src 'self'"

@@ -1,7 +1,7 @@
 chrome.runtime.onMessage.addListener( // this is the message listener
     function (request, sender, sendResponse) {
-        console.log('>>request>' + request);
-        console.log('>>sendResponse>' + sendResponse);
+        console.log('>>получил запрос request>' + request);
+        console.log('>>фнукция колбек sendResponse>' + sendResponse);
 
 
         // if (request.length > 12) getData(sendResponse)
@@ -25,6 +25,7 @@ chrome.runtime.onMessage.addListener( // this is the message listener
     }
 );
 
+
 function toScrollIntoView(id) {
     var hiddenElement = document.getElementById(id);
     hiddenElement.scrollIntoView({block: "center", behavior: "smooth"});
@@ -44,17 +45,23 @@ function getData(sendResponse) {
     })
 
     sendResponse(data);
+
+    chrome.runtime.sendMessage({"action": "openOptionsPage"}); // открываю вкладку опций
+    chrome.runtime.sendMessage({data}); // передаю все данные
 }
 
 function getAccount(sendResponse) {
-    // с сайта https://www.avito.ru/ вытягивает имя зарегистрированного аккунта
+    // с сайта https://dev.autonet.pro/ вытягивает имя зарегистрированного аккунта
     let nameAccount = localStorage.getItem('name')
-    console.log('= = = = nameAccount', nameAccount)
+    console.log('= = =с сайта dev.autonet.pro 3333333333333333 = nameAccount', nameAccount)
     if (!nameAccount) {
         nameAccount = location.pathname === "/kazan/avtomobili"
         console.log(' ? ? ? nameAccount', nameAccount)
     }
     sendResponse(nameAccount);
+
+
+
 }
 
 function setClosePosition(id) {
@@ -98,6 +105,16 @@ function setClosePosition(id) {
     //     "mode": "cors",
     //     "credentials": "include"
     // });
+
+}
+
+
+if ('serviceWorker' in navigator) {
+    console.log('serviceWorker EУРА')
+
+    console.log('navigator.serviceWorker', navigator.serviceWorker)
+    // ensure service worker is ready, you can also put this into DOM 'ready' or 'load' event
+
 
 }
 

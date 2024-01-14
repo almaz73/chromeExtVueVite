@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import './style.css'
-import App from './App.vue'
+import OptionsPage from './OptionsPage.vue'
 
-let app = createApp(App)
+let app = createApp(OptionsPage)
 app.mount('#app')
