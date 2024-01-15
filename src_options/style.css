@@ -6,15 +6,17 @@ body {
 }
 
 main {
-     overflow-y: auto;
+    overflow-y: auto;
     padding: 30px;
     text-align: center;
 
-    background: #222;
-    color: wheat;
+    background: #151515;
+    color: white;
 }
-input{
+
+input {
     background: black;
+    color: white;
 }
 
 .list {
@@ -47,7 +49,9 @@ button:active {
 }
 
 .active {
-    background: #F5E1D0;
+    background: #333;
+    text-align: justify;
+    border-radius: 10px;
 }
 
 .item {
@@ -74,7 +78,18 @@ button:active {
     height: 21px;
     width: 28px
 }
+
 .car-picture:hover {
     height: 25px;
     margin-top: -4px;
+}
+
+.muTable {
+    border: 2px inset white;
+    background: #222;
+    padding: 24px;
+    max-width: 1000px;
+    margin: 30px auto;
+    font-size: initial
+
 }
