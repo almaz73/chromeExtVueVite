@@ -7,7 +7,7 @@
         </a>
       </div>
       <div v-if="!operatorName" class="note red">Не сделано</div>
-      <div v-else class="note green">::::✅Cделано:::: Оператор: {{ operatorName }}</div>
+      <div v-else class="note green">::::✅Готово:::: Оператор: {{ operatorName }}</div>
 
       <div>2. Отфильтровать автомобили на
         <a href="https://www.avito.ru/kazan/avtomobili?radius=100&searchRadius=100">
@@ -15,7 +15,7 @@
         </a>
       </div>
       <div v-if="isNeedAvito" class="note red">Не сделано</div>
-      <div v-else class="note green">::::✅Cделано::::</div>
+      <div v-else class="note green">::::✅Готово::::</div>
 
       <div :style="{'opacity':isReady?1:0.5, 'pointer-events': isReady?'auto':'none'}">3.
         <button
