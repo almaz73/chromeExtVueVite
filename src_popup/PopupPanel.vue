@@ -2,7 +2,7 @@
   <main>
     <div>
       <div>1. Авторизоваться на
-        <a href="https://www.avito.ru/kazan/avtomobili?radius=100&searchRadius=100">
+        <a href="https://dev.autonet.pro/#/appeal/391850">
           dev.autonet.pro
         </a>
       </div>
