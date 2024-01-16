@@ -1,85 +1,160 @@
 <template>
   <main>
-    <div>
-      <div style="position: absolute; right: 40px;text-align: right; ">Оператор: {{ operatorName }}<br>
-        <button @click="eee2()">Попытка сохранить</button>
+    <div style="text-align: center; ">
+      <div style="position: absolute; right: 40px;text-align: right; display: flex; align-items: center">
+
+        <el-radio-group @click="toggleDark()">
+          <el-radio-button label="Темная тема"/>
+          <el-radio-button label="Светлая тема"/>
+        </el-radio-group>
+        &nbsp; &nbsp; &nbsp;
+
+        Оператор: {{ operatorName }}<br>
+
       </div>
 
+      <div>
 
-      <h1>Операторская</h1>
-      <p>Обработка обьявлений. <a @click="isDescription=!isDescription" style="font-size: smaller">Подробнее..</a></p>
+        <h1>Операторская</h1>
+        <p>Обработка обьявлений.
+          <a href="#" @click="isDescription=!isDescription" style="font-size: smaller">Подробнее..</a>
+        </p>
 
-
-      <div  v-if="isDescription" style="text-align: left">
-        <p>https://dev.autonet.pro/#/appeal/391850</p>
-        <h3 @click="isReady=!isReady" style="cursor: pointer">Что уже умеет</h3>
-        <ul v-if="isReady">
-          <li>Работает с сайтом Авито (<a href="avito.ru/kazan/avtomobili?radius=100">
-            avito.ru/kazan/avtomobili?radius=100)</a></li>
-          <li>Может получить данные с сайта и построить краткий список</li>
-          <li>При нажатии текста списка, отображает доп.данные</li>
-          <li>При нажатие на иконку автомобиля, прокручивает сайт до данного обьявления</li>
-          <li>Имеет поле фильтрации, которая работает по вхождению слов, чисел</li>
-        </ul>
-        <h3 @click="isFuture=!isFuture" style="cursor: pointer">Что еще можно сделать</h3>
-        <ul v-if="isFuture">
-          <li> При нажатии галочки "Взять на обработку" в нужно сохранить в базу кто и что и когда взял на обработку,
-            который будет
-            потом отображена у всех опереторов, предотвращая двойную обработку.
-          </li>
-          <li>При обработке, оператор может писать комментарии типа: автовладелец готов приехать на осмотр/ попросил
-            перезводинть позже/не подходит для нас, закредитован.
-          </li>
-          <li>Список обработанных данных можно сразу включить в состав программы, для анализа и повторного использования
-          </li>
-          <li>Через плагин можно настроить управление фильтрами авито</li>
-          <li>Плагин можно привязать к аккаунту оператора, и ставить задания удаленно прямо в плагин</li>
-        </ul>
-      </div>
-    </div>
-    <div v-if="avitoData.length">
-      Фильтрация по слову:
-      <input v-model="filtertext" @input="search()">
-    </div>
-
-    <div v-if="avitoData.length" class="muTable">
-      <div v-for="item in avitoDataFiltered"
-           :key="item.id"
-           class="item"
-           :class="{active:activeItem===item.id}">
         <div>
-
-          <span @click="toActive(item.id)" :style="{'textDecoration':useIds.includes(item.id)?'line-through':''}">
-            {{ item.title }}
-          </span>
-          <small style="float: right"><i>
-            <label style="white-space: nowrap; font-size: small ">
-              Взят на обработку
-              <input type="checkbox" :checked="useIds.includes(item.id)" @change="keep(item)">
-            </label>
-          <br>
-            <label style="white-space: nowrap; font-size: small; float: right ">
-              Клиент с нами
-              <input type="checkbox" :checked="useIds.includes(item.id)" @change="keep(item)">
-            </label>
-          </i></small>
+          <a href="#" style="font-size: small" @click="isDev=!isDev">Что нужно сделать</a>
+          <div style="text-align: left" v-if="isDev">
+            <ul>
+              <li>Отображение отклонения цены от рынка (На больших данных среднюю цену рассчитать)</li>
+              <li>Онлайн обновление</li>
+              <li>Без дублей, если открывает DROM AVTO AVITO</li>
+              <li>Сообщение, если уже снято с продажи</li>
+              <li>Хранить ссылку, для открывания на сайте</li>
+              <li>Показ частник/дилер</li>
+              <li>Показать сколько обьявлений у продовца (дилер не дилер)</li>
+            </ul>
+            <button @click="eee2()">Попытка сохранить</button>
+          </div>
 
 
         </div>
 
-        <br>
-        <div class="item__content">{{ item.content }}</div>
-        <br>
+
+        <div v-if="isDescription" style="text-align: left">
+          <p>https://dev.autonet.pro/#/appeal/391850</p>
+          <h3 @click="isReady=!isReady" style="cursor: pointer">Что уже умеет</h3>
+          <ul v-if="isReady">
+            <li>Работает с сайтом Авито (<a href="avito.ru/kazan/avtomobili?radius=100">
+              avito.ru/kazan/avtomobili?radius=100)</a></li>
+            <li>Может получить данные с сайта и построить краткий список</li>
+            <li>При нажатии текста списка, отображает доп.данные</li>
+            <li>При нажатие на иконку автомобиля, прокручивает сайт до данного обьявления</li>
+            <li>Имеет поле фильтрации, которая работает по вхождению слов, чисел</li>
+          </ul>
+          <h3 @click="isFuture=!isFuture" style="cursor: pointer">Что еще можно сделать</h3>
+          <ul v-if="isFuture">
+            <li> При нажатии галочки "Взять на обработку" в нужно сохранить в базу кто и что и когда взял на обработку,
+              который будет
+              потом отображена у всех опереторов, предотвращая двойную обработку.
+            </li>
+            <li>При обработке, оператор может писать комментарии типа: автовладелец готов приехать на осмотр/ попросил
+              перезводинть позже/не подходит для нас, закредитован.
+            </li>
+            <li>Список обработанных данных можно сразу включить в состав программы, для анализа и повторного
+              использования
+            </li>
+            <li>Через плагин можно настроить управление фильтрами авито</li>
+            <li>Плагин можно привязать к аккаунту оператора, и ставить задания удаленно прямо в плагин</li>
+          </ul>
+        </div>
       </div>
+    </div>
+
+
+    <br><br>
+    <div v-if="avitoData.length" style="max-width: 1200px; margin: auto;">
+      <div v-if="avitoData.length" style="text-align: right; margin: 4px 0; opacity: .5">
+        <small>Фильтрация по слову:
+          <input v-model="filtertext" @input="search()">
+        </small>
+      </div>
+      <el-table
+          ref="tableRef"
+          row-key="date"
+          border
+          height="650"
+          :row-class-name="tableRowClassName"
+          :data="avitoDataFiltered"
+          style="width: 100%">
+
+        <el-table-column prop="title" label="Обьявления"/>
+
+        <el-table-column label="Обработка" width="200">
+          <template #default="scope">
+
+            <label><input type="checkbox"> Обработан</label> &nbsp;&nbsp;
+
+            <el-button
+                size="small"
+                type="success"
+                stripe="true"
+                @click="handleDelete(scope.$index, scope.row)"
+            >С нами
+            </el-button
+            >
+          </template>
+        </el-table-column>
+      </el-table>
+
+
+      <!--      <div v-for="item in avitoDataFiltered"-->
+      <!--           :key="item.id"-->
+      <!--           class="item"-->
+      <!--           :class="{active:activeItem===item.id}">-->
+      <!--        <div>-->
+
+      <!--          <span @click="toActive(item.id)" :style="{'textDecoration':useIds.includes(item.id)?'line-through':''}">-->
+      <!--            {{ item.title }}-->
+      <!--          </span>-->
+      <!--          <small style="float: right"><i>-->
+      <!--            <label style="white-space: nowrap; font-size: small ">-->
+      <!--              Взят на обработку-->
+      <!--              <input type="checkbox" :checked="useIds.includes(item.id)" @change="keep(item)">-->
+      <!--            </label>-->
+      <!--            <br>-->
+      <!--            <label style="white-space: nowrap; font-size: small; float: right ">-->
+      <!--              Клиент с нами-->
+      <!--              <input type="checkbox" :checked="useIds.includes(item.id)" @change="keep(item)">-->
+      <!--            </label>-->
+      <!--          </i></small>-->
+
+
+      <!--        </div>-->
+
+      <!--        <br>-->
+      <!--        <div class="item__content">{{ item.content }}</div>-->
+      <!--        <br>-->
+      <!--      </div>-->
     </div>
 
   </main>
 </template>
+<style>
+.el-table .warning-row {
+  --el-table-tr-bg-color: var(--el-color-warning-light-9);
+}
 
+.el-table .success-row {
+  --el-table-tr-bg-color: var(--el-color-success-light-9);
+}
+</style>
 
 <script setup>
 
 import {ref} from "vue";
+import {useDark, useToggle} from '@vueuse/core'
+
+const isDark = useDark()
+const toggleDark = useToggle(isDark)
 
 
 const avitoData = ref([])
@@ -90,6 +165,13 @@ const isFuture = ref(true)
 const isReady = ref(true)
 const operatorName = ref('')
 const isDescription = ref(false)
+const isDev = ref(false)
+
+const tableRowClassName = ({row, rowIndex,}) => {
+  if (rowIndex === 1) return 'warning-row'
+  else if (rowIndex === 3) return 'success-row'
+  return ''
+}
 
 
 chrome.runtime && chrome.runtime.onMessage.addListener(function (message) {
@@ -112,7 +194,6 @@ chrome.runtime && chrome.runtime.onMessage.addListener(function (message) {
   }
 })
 
-console.log('self', self) // - это window
 
 if (!chrome.tabs) {
   // для локальной настройки
@@ -163,7 +244,7 @@ async function eee2() {
   const response = await fetch('https://dev.autonet.pro/api/comment//', {
     headers: {'content-type': 'application/json;charset=UTF-8'},
     method: 'POST',
-    body: '{"text":'+Date.now()+',"EntityId":391850,"entityType":20}',
+    body: '{"text":' + Date.now() + ',"EntityId":391850,"entityType":20}',
   })
 
 
