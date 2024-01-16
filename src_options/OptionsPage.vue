@@ -88,19 +88,17 @@
 
         <el-table-column prop="title" label="Обьявления"/>
 
-        <el-table-column label="Обработка" width="200">
+        <el-table-column label="Обработка" width="250">
           <template #default="scope">
-
             <label><input type="checkbox"> Обработан</label> &nbsp;&nbsp;
-
             <el-button
                 size="small"
                 type="success"
                 stripe="true"
                 @click="handleDelete(scope.$index, scope.row)"
             >С нами
-            </el-button
-            >
+            </el-button>
+            <span style="cursor: pointer" @click="openModal(scope.row)">&nbsp;&nbsp;✏️</span>
           </template>
         </el-table-column>
       </el-table>
@@ -136,6 +134,15 @@
       <!--      </div>-->
     </div>
 
+    <AppModal v-if="isOpen"
+              @closeModal="closeModal"
+              draggable
+              resizable>
+      <p>
+        {{row_content}}
+      </p>
+    </AppModal>
+
   </main>
 </template>
 <style>
@@ -152,6 +159,7 @@
 
 import {ref} from "vue";
 import {useDark, useToggle} from '@vueuse/core'
+import AppModal from "./components/AppModal.vue";
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
@@ -166,6 +174,16 @@ const isReady = ref(true)
 const operatorName = ref('')
 const isDescription = ref(false)
 const isDev = ref(false)
+const isOpen = ref(false)
+const row_content = ref('')
+
+const openModal = (row) => {
+  row_content.value =  row.content
+  console.log('row_content.value', row_content.value)
+
+  isOpen.value = !isOpen.value
+}
+const closeModal = () => isOpen.value = false
 
 const tableRowClassName = ({row, rowIndex,}) => {
   if (rowIndex === 1) return 'warning-row'
