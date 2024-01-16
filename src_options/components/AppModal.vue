@@ -62,12 +62,15 @@ const mouseup = () => {
   </Teleport>
 </template>
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
+
 .modal {
   top: 0;
   width: 100%;
   height: 100vh;
   position: fixed;
   z-index: 1000;
+  font-family: 'Roboto', sans-serif;
 }
 
 .modal__fon {
@@ -98,6 +101,8 @@ const mouseup = () => {
   border-radius: 10px;
   box-shadow: 0 0 5px black;
   background: white;
+
+  font-size: large;
 }
 .dark .modal__content{
   background: #333;
@@ -115,12 +120,9 @@ const mouseup = () => {
   cursor: pointer;
 }
 
-.modal__title {
-  //background: orange;
-}
 
 .modal__info {
-  background: green;
+  background: #222;
 }
 
 .modal__info {

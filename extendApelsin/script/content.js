@@ -33,15 +33,27 @@ function toScrollIntoView(id) {
 
 
 function getData(sendResponse) {
+    console.log('sendResponse')
     // со страниц https://www.avito.ru/kazan/avtomobili вытягивает заголовки, контент и id
     let fields = document.querySelectorAll('[data-marker="item"]')
 
     let data = []
     fields.forEach(el => {
-        let id = el.id
-        let title = el.querySelector(".iva-item-titleStep-pdebR > div > a").title
-        let content = el.querySelector('meta').content
-        data.push({id, title, content})
+        let id, head, content, title, photo, price, link;
+        id = el.id
+        head = el.querySelector(".iva-item-titleStep-pdebR > div > a").textContent
+        content = el.querySelector('meta').content
+        try {
+            title = el.querySelector(".iva-item-titleStep-pdebR > div > a").title
+            photo = el.querySelector('[data-marker="item-photo"] img').src
+            price = el.querySelector('[data-marker="item-price"]').querySelector('[itemprop="price"]').content
+            link = el.querySelector('[itemprop="url"]').href
+        } catch (e) {
+        }
+
+
+
+        data.push({id, title, content, head, photo, price, link})
     })
 
     sendResponse(data);
@@ -63,31 +75,6 @@ function getAccount(sendResponse) {
     chrome.runtime.sendMessage({"action": "setOperator", nameAccount}); // открываю вкладку опций
 
 }
-
-// function setClosePosition(id) {
-//     // сохраним в базе id обявления, чтобы отметить что обработано
-//     let payload = {
-//         "EntityId": 391867,
-//         "entityType": 20,
-//         "text": id
-//     }
-//     fetch("https://dev.autonet.pro/api/comment//", {
-//         "headers": {
-//             "accept": "application/json, text/plain, */*",
-//             "content-type": "application/json;charset=UTF-8",
-//             "sec-fetch-mode": "cors",
-//             "sec-fetch-site": "same-origin",
-//             "x-requested-with": "XMLHttpRequest"
-//         },
-//         "referrer": "https://dev.autonet.pro/",
-//         "referrerPolicy": "strict-origin-when-cross-origin",
-//         "body": payload,
-//         "method": "POST",
-//         "mode": "no-cors",
-//         "credentials": "include"
-//     });
-//
-// }
 
 
 if ('serviceWorker' in navigator) console.log('serviceWorker заработал')

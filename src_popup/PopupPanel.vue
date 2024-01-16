@@ -54,10 +54,12 @@ const ids = localStorage.getItem('IDS')
 if (ids) useIds.value = ids.split(',')
 
 function askData() {
+  console.log('1. askData')
   sendQustionToContent({currentWindow: true, active: true}, '1. Parsing site', answerAutoList)
 }
 
 function askAccount() {
+  console.log('2. askAccount')
   sendQustionToContent({}, '2. Get my account', answerAccountName)
 }
 
@@ -72,7 +74,7 @@ function sendQustionToContent(params, question, callback) {
 
 
 function answerAccountName(val) {
-  console.log('val', val)
+  console.log('????? val', val)
 
   if (val === true) isNeedAvito.value = false
   if (val && val !== 'null' && val !== true) operatorName.value = val

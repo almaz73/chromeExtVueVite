@@ -32,7 +32,8 @@
               <li>Показ частник/дилер</li>
               <li>Показать сколько обьявлений у продовца (дилер не дилер)</li>
             </ul>
-            <button @click="eee2()">Попытка сохранить</button>
+            <button @click="attempt1()">Попытка сохранить комментарий</button>
+            <button @click="attempt1()">Попытка создатьт обращение</button>
           </div>
 
 
@@ -136,10 +137,35 @@
 
     <AppModal v-if="isOpen"
               @closeModal="closeModal"
+              width="1200"
               draggable
               resizable>
       <p>
-        {{row_content}}
+        <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
+          <el-tab-pane label="photo" name="first">
+            {{ currentRow.photo }}
+            <img alt="" :src="currentRow.photo">
+          </el-tab-pane>
+          <el-tab-pane label="id">
+            {{ currentRow.id }}
+          </el-tab-pane>
+          <el-tab-pane label="title">
+            {{ currentRow.title }}
+          </el-tab-pane>
+          <el-tab-pane label="content">
+            {{ currentRow.content }}
+          </el-tab-pane>
+          <el-tab-pane label="head">
+            {{ currentRow.head }}
+          </el-tab-pane>
+          <el-tab-pane label="link">
+            {{ currentRow.link }}
+            <a :href="currentRow.link">Ссылка</a>
+          </el-tab-pane>
+          <el-tab-pane label="price">
+            {{ currentRow.price }}
+          </el-tab-pane>
+        </el-tabs>
       </p>
     </AppModal>
 
@@ -175,11 +201,12 @@ const operatorName = ref('')
 const isDescription = ref(false)
 const isDev = ref(false)
 const isOpen = ref(false)
-const row_content = ref('')
+const currentRow = ref('')
+const activeName = ref('first')
 
 const openModal = (row) => {
-  row_content.value =  row.content
-  console.log('row_content.value', row_content.value)
+  currentRow.value = row
+  console.log('row_content.value', currentRow.value)
 
   isOpen.value = !isOpen.value
 }
@@ -258,7 +285,7 @@ function toActive(id) {
 }
 
 
-async function eee2() {
+async function attempt1() {
   const response = await fetch('https://dev.autonet.pro/api/comment//', {
     headers: {'content-type': 'application/json;charset=UTF-8'},
     method: 'POST',
@@ -273,6 +300,23 @@ async function eee2() {
   } else {
     alert(`Ошибка HTTP: ${response.status}`)
   }
+}
+
+async function attempt2() {
+  const response = await fetch('https://dev.autonet.pro/api/communication/callCenterCommunication?id=', {
+    headers: {'content-type': 'application/json;charset=UTF-8'},
+    method: 'POST',
+    "body": "{\"workflow\":{\"source\":10,\"auto\":{},\"workflowLeadType\":2,\"BuyCategory\":10,\"carBrand\":\"ВАЗ (LADA)\",\"brandId\":255,\"carModelId\":2685,\"locationId\":0},\"lead\":{\"source\":10,\"person\":{\"phone\":\"23232323\",\"firstName\":\"Алмаз\",\"email\":\"almaz73@gmail.com\",\"lastName\":\"Файзрахманов\"},\"leadId\":0,\"leadType\":10},\"communication\":{\"callType\":10,\"type\":10,\"sourceId\":15,\"city\":\"Казань\"}}",
+  })
+
+  console.log('response', response)
+
+  if (response.ok) {
+    console.log('ОК', response)
+  } else {
+    alert(`Ошибка HTTP: ${response.status}`)
+  }
+
 }
 
 
