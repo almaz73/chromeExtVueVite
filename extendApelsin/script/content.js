@@ -1,17 +1,10 @@
 chrome.runtime.onMessage.addListener( // this is the message listener
     function (request, sender, sendResponse) {
-        console.log('>>получил запрос request>' + request);
-        console.log('>>фнукция колбек sendResponse>' + sendResponse);
-
-
-        // if (request.length > 12) getData(sendResponse)
-        // else toScrollIntoView(request)
+        console.log('>>получил запрос от расширения>' + request);
 
         switch (+request.split('.')[0]) {
             case 1:
-                console.log(' - - - - - - --')
-                getData(sendResponse)
-
+                getAvitoData(sendResponse) // с текущей страницы отдаются найденные данные
                 break
             case 2:
                 getAccount(sendResponse);
@@ -32,7 +25,7 @@ function toScrollIntoView(id) {
 }
 
 
-function getData(sendResponse) {
+function getAvitoData(sendResponse) {
     console.log('s.e.n.d.R.e.s.p.o.n.s.e.')
     // со страниц https://www.avito.ru/kazan/avtomobili вытягивает заголовки, контент и id
     let fields = document.querySelectorAll('[data-marker="item"]')
@@ -43,22 +36,22 @@ function getData(sendResponse) {
         id = el.id
         head = el.querySelector(".iva-item-titleStep-pdebR > div > a").textContent
         content = el.querySelector('meta').content
+        title = el.querySelector(".iva-item-titleStep-pdebR > div > a").title
+        photo = el.querySelector('[data-marker="item-photo"] img').src
+        price = el.querySelector('[data-marker="item-price"]').querySelector('[itemprop="price"]').content
+        link = el.querySelector('[itemprop="url"]').href
+        time = el.querySelector('[data-marker="item-date/tooltip/reference"]').textContent
+        diler = el.querySelector('[data-marker="item-line"]').textContent
+        specific = el.querySelector('[data-marker="item-specific-params"]').textContent
         try {
-            title = el.querySelector(".iva-item-titleStep-pdebR > div > a").title
-            photo = el.querySelector('[data-marker="item-photo"] img').src
-            price = el.querySelector('[data-marker="item-price"]').querySelector('[itemprop="price"]').content
-            link = el.querySelector('[itemprop="url"]').href
-            time = el.querySelector('[data-marker="item-date/tooltip/reference"]').textContent
-            diler = el.querySelector('[data-marker="item-line"]').textContent
-            specific = el.querySelector('[data-marker="item-specific-params"]').textContent
             text = el.querySelector('.iva-item-body-KLUuy').childNodes[5].textContent
-            corresponds= el.querySelector('.iva-item-body-KLUuy').childNodes[3].textContent
+            corresponds = el.querySelector('.iva-item-body-KLUu----------y').childNodes[3].textContent
         } catch (e) {
         }
+
+
         data.push({id, title, content, head, photo, price, link, time, text, diler, specific, corresponds})
     })
-
-
 
 
     sendResponse(data);
@@ -81,12 +74,15 @@ function getAccount(sendResponse) {
     }
     sendResponse(nameAccount);
 
-    chrome.runtime.sendMessage({"action": "setOperator", nameAccount}); // открываю вкладку опций
+    chrome.runtime.sendMessage({"action": "setOperator", nameAccount}); // сообщаем расширению о готовности
 
 }
 
 
 if ('serviceWorker' in navigator) console.log('serviceWorker заработал')
+
+// Для периодического обновления кнопка
+// document.querySelector('[data-marker="search-filters/submit-button"]')
 
 
 
