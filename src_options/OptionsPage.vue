@@ -230,6 +230,7 @@ chrome.runtime && chrome.runtime.onMessage.addListener(function (message) {
     default:
       console.log('DEFAULT Не обработанные message=', message)
   }
+  return true
 })
 
 

@@ -82,7 +82,7 @@ button:active {
 }
 
 .note{
-    text-align: center;
+    margin-right: 10px;
 }
 .note.red{
     color: red;

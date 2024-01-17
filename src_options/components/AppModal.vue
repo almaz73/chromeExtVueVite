@@ -100,7 +100,7 @@ const mouseup = () => {
   padding: 10px;
   border-radius: 10px;
   box-shadow: 0 0 5px black;
-  background: white;
+  background: #ddd;
 
   font-size: large;
 }
@@ -120,10 +120,14 @@ const mouseup = () => {
   cursor: pointer;
 }
 
-
 .modal__info {
+  background: #eee;
+}
+
+.dark .modal__info {
   background: #222;
 }
+
 
 .modal__info {
   padding: 10px;

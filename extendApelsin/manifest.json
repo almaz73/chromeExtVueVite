@@ -32,7 +32,7 @@
     "extension_pages": "script-src 'self'"
   },
   "content_scripts": [ {
-    "js": ["script/content.js"],
+    "js": ["script/content.js", "script/avito.js"],
     "matches": [
       "https://dev.autonet.pro/",
       "https://developer.chrome.com/docs/extensions/*",

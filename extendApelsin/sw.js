@@ -18,6 +18,7 @@ chrome.runtime.onMessage.addListener(function (message) {
         default:
             break;
     }
+    return true
 });
 
 function openOptionsPage() {
