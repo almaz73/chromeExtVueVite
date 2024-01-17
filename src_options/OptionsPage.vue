@@ -87,6 +87,7 @@
           :data="avitoDataFiltered"
           style="width: 100%">
 
+        <el-table-column prop="price" label="Стоимость"  width="100"/>
         <el-table-column prop="title" label="Обьявления"/>
 
         <el-table-column label="Обработка" width="250">
@@ -165,6 +166,22 @@
           <el-tab-pane label="price">
             {{ currentRow.price }}
           </el-tab-pane>
+          <el-tab-pane label="time">
+            {{ currentRow.time }}
+          </el-tab-pane>
+          <el-tab-pane label="diler">
+            {{ currentRow.diler }}
+          </el-tab-pane>
+          <el-tab-pane label="text">
+            {{ currentRow.text }}
+          </el-tab-pane>
+          <el-tab-pane label="specific">
+            {{ currentRow.specific }}
+          </el-tab-pane>
+          <el-tab-pane label="corresponds">
+            {{ currentRow.corresponds }}
+          </el-tab-pane>
+
         </el-tabs>
       </p>
     </AppModal>
