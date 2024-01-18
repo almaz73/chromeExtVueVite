@@ -51,13 +51,8 @@ chrome.tabs && chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs =
 });
 
 
-// const useIds = ref([])
-// const ids = localStorage.getItem('IDS')
-// if (ids) useIds.value = ids.split(',')
-
 function askData() {
   console.log('1. askData')
-  // sendQustionToContent({currentWindow: true, active: true}, '1. Parsing site', answerAutoList)
   sendQustionToContent({}, '1. Parsing site')
 }
 

@@ -88,6 +88,12 @@
           :data="avitoDataFiltered"
           style="width: 100%">
 
+
+        <el-table-column prop="photo" label="Фото" width="60">
+          <template #default="scope">
+            {{scope.row.photo?'фото':''}}
+          </template>
+        </el-table-column>
         <el-table-column prop="price" label="Стоимость" width="100"/>
         <el-table-column prop="title" label="Обьявления"/>
         <el-table-column prop="corresponds" label="Заметка" width="200"/>
@@ -181,7 +187,7 @@
 import {ref, watch} from "vue";
 import {useDark, useToggle} from '@vueuse/core'
 import AppModal from "./components/AppModal.vue";
-import {weblink, attempt1, attempt2} from "./composables/commonFunctions.js";
+import {weblink, attempt1, attempt2, updateData} from "./composables/commonFunctions.js";
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
@@ -211,6 +217,7 @@ watch(currentRow, function () {
 const closeModal = () => isOpen.value = false
 
 const tableRowClassName = ({row, rowIndex,}) => {
+
   if (rowIndex === 1) return 'warning-row'
   else if (rowIndex === 3) return 'success-row'
   return ''
@@ -218,13 +225,13 @@ const tableRowClassName = ({row, rowIndex,}) => {
 
 
 chrome.runtime && chrome.runtime.onMessage.addListener(function (message) {
+
   switch (message.action) {
     case "pass":
-      console.log('ВСЕ ДАННЫЕ ПОЛУЧИЛ', message);
-      if (message.data.length) {
-        avitoData.value = message.data
-        avitoDataFiltered.value = [...avitoData.value]
-      }
+      console.log('ВСЕ ДАННЫЕ ПОЛУЧИЛ - периодически', message);
+
+      message.data.length && updateData(message.data, avitoData, avitoDataFiltered)
+
       if (message.nameAccount) operatorName.value = message.nameAccount
       break
     default:

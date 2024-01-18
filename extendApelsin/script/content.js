@@ -1,19 +1,20 @@
 chrome.runtime.onMessage.addListener( // this is the message listener
     function (request, sender, sendResponse) {
-        console.log('>>получил запрос от расширения>' + request);
+        console.log('>>получил>>>>>>>>>> запрос от расширения>' + request);
 
         switch (+request.split('.')[0]) {
             case 1:
                 if (location.pathname.includes("/avtomobili")) getAvitoData()
+                chrome.runtime.sendMessage({"action": "openOptionsPage"}); // открываю вкладку опций
                 break
             case 2:
                 wichPageReady(sendResponse);
                 break
             case 3:
-                setClosePosition(request.split('.')[1]);
+                // setClosePosition(request.split('.')[1]);
                 break
             default:
-                toScrollIntoView(request);
+                // toScrollIntoView(request);
         }
 
         return true
@@ -21,10 +22,13 @@ chrome.runtime.onMessage.addListener( // this is the message listener
 );
 
 
-function toScrollIntoView(id) {
-    var hiddenElement = document.getElementById(id);
-    hiddenElement.scrollIntoView({block: "center", behavior: "smooth"});
-}
+
+
+// function toScrollIntoView(id) {
+//     var hiddenElement = document.getElementById(id);
+//     hiddenElement.scrollIntoView({block: "center", behavior: "smooth"});
+// }
+
 
 
 function wichPageReady(sendResponse) {
@@ -35,9 +39,6 @@ function wichPageReady(sendResponse) {
         if (nameAccount) {
             chrome.runtime.sendMessage({"action": "setOperator", nameAccount}); // сообщаем расширению о готовности
             sendResponse('autoNetProReady');
-            console.log('===wichPageReady===')
-        } else {
-
         }
     }
     if (location.pathname.includes("/avtomobili")) {
