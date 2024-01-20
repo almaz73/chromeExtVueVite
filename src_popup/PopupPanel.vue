@@ -24,9 +24,8 @@
       <div :style="{'opacity':isReady?1:0.5, 'pointer-events': isReady?'auto':'none'}">
         <button
             :disabled="!isReady"
-            @click="askData()">Забирать
+            @click="askData()">Забрать данные
         </button>
-        данные с периодом 30 секунд
       </div>
     </div>
   </main>
@@ -59,6 +58,11 @@ function askData() {
 function askAccount() {
   console.log('2. askAccount')
   sendQustionToContent({}, '2. Get my account', answerAccountName)
+
+  setTimeout(()=>{
+    if(!isAutorization.value || !isAvitoReady.value)
+    askAccount()
+  }, 3000)
 }
 
 function sendQustionToContent(params, question, callback) {
@@ -73,9 +77,10 @@ function sendQustionToContent(params, question, callback) {
 
 function answerAccountName(val) {
   console.log('из закладок  приходит в расширение - ', val)
-
-  if (val === 'avitoReady') isAvitoReady.value = true
-  if (val === 'autoNetProReady') isAutorization.value = true
+  if(!chrome.runtime.lastError) {
+    if (val === 'avitoReady') isAvitoReady.value = true
+    if (val === 'autoNetProReady') isAutorization.value = true
+  }
 }
 
 

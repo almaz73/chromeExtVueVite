@@ -5,7 +5,7 @@ function getAvitoData() {
     // со страниц https://www.avito.ru/kazan/avtomobili вытягивает заголовки, контент и id
     let fields = document.querySelectorAll('[data-marker="item"]')
 
-    fields.forEach(el => {
+    fields && fields.forEach(el => {
         let id, head, content, title, photo, price, link, time, text, diler, specific, corresponds;
         try {
             id = el.id
@@ -62,7 +62,7 @@ function getAvitoData() {
     })
 
 
-    chrome.runtime.sendMessage({"action": "showData", data}); // передаю все данные
+    chrome.runtime && chrome.runtime.sendMessage({"action": "showData", data}); // передаю все данные
 
 
     // пока не заработало, не ловит фокус
@@ -71,30 +71,26 @@ function getAvitoData() {
     // fields[0].querySelectorAll('button')[1].click()
     // console.log('НАЖАЛ ОТКРЫТИЕ ТЕЛЕФОНА')
 
-    findWithoutPhoto()
-    setTimeout(()=>{
-        getAvitoData()
-    }, 15000) // овторяем
-
+    // findWithoutPhoto()
 }
 
 
 /**
  * Нахожу без фото -  прокручиваю к нему
  */
-function findWithoutPhoto() {
-    window.DDD =data
-    console.log('data', data)
-    let elementWitoutPhoto = data.find(el=>!el.photo)
-    console.log('> > > elementWitoutPhoto', elementWitoutPhoto)
-    toScrollIntoView(elementWitoutPhoto.id.toString())
-}
-
-function toScrollIntoView(id) {
-    console.log('id', id, typeof id)
-    const hiddenElement = document.getElementById(id);
-    // console.log('hiddenElement', hiddenElement)
-    hiddenElement.scrollIntoView({block: "center", behavior: "smooth"});
-}
+// function findWithoutPhoto() {
+//     window.DDD =data
+//     console.log('data', data)
+//     let elementWitoutPhoto = data.find(el=>!el.photo)
+//     console.log('> > > elementWitoutPhoto', elementWitoutPhoto)
+//     toScrollIntoView(elementWitoutPhoto.id.toString())
+// }
+//
+// function toScrollIntoView(id) {
+//     console.log('id', id, typeof id)
+//     const hiddenElement = document.getElementById(id);
+//     // console.log('hiddenElement', hiddenElement)
+//     hiddenElement.scrollIntoView({block: "center", behavior: "smooth"});
+// }
 
 

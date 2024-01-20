@@ -34,11 +34,9 @@
   "content_scripts": [ {
     "js": ["script/content.js", "script/avito.js"],
     "matches": [
-      "https://dev.autonet.pro/",
-      "https://developer.chrome.com/docs/extensions/*",
-      "https://developer.chrome.com/docs/webstore/*",
+      "https://fmap.ru/games/*",
       "https://www.avito.ru/*",
-      "https://fmap.ru/games/*"
+      "https://dev.autonet.pro/*"
     ]
   }]
 }

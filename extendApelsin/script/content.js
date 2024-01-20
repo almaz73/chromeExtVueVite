@@ -37,8 +37,9 @@ function wichPageReady(sendResponse) {
         // Если зарегистрировались на сайте автосеть
         let nameAccount = localStorage.getItem('name');
         if (nameAccount) {
-            chrome.runtime.sendMessage({"action": "setOperator", nameAccount}); // сообщаем расширению о готовности
+            chrome.runtime && chrome.runtime.sendMessage({"action": "setOperator", nameAccount}); // сообщаем расширению о готовности
             sendResponse('autoNetProReady');
+            return false
         }
     }
     if (location.pathname.includes("/avtomobili")) {
