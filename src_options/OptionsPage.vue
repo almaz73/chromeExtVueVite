@@ -90,7 +90,16 @@
 
 
         <el-table-column prop="time" label="time" width="80"/>
-        <el-table-column prop="diler" label="diler" width="100"/>
+        <el-table-column prop="diler" label="diler" width="140">
+          <template #default="scope">
+            <div> {{ scope.row.diler }}</div>
+            <div style="color: green">
+              {{scope.row.text && scope.row.text.includes('Соответствует оценке')?'Соответствует оценке':''}}
+            </div>
+          </template>
+        </el-table-column>
+
+
         <el-table-column label="Обьявления">
           <template #default="scope">
             <a :href="scope.row.title.lonk">{{ scope.row.title }}</a>
@@ -193,7 +202,7 @@ watch(avitoData, () => {
         console.log('oldTel', oldTel)
 
         avitoData.value.map(el => {
-          let row = oldTel.find(item=>item.id == el.id )
+          let row = oldTel.find(item => item.id == el.id)
           console.log('row', row)
 
           if (row) el.tel = row.tel

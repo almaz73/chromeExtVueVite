@@ -156,13 +156,12 @@ let body = ref({
 
 
 async function attempt3() {
-  console.log('> > > body', body.value)
-
   if (!body.value.lead.person.phone) {
     ElNotification({
       title: 'Предупреждение',
       message: h('i', {style: 'color: teal'}, 'Поле "Телефон" обязателен для заполнения'),
     })
+    return false
   }
   // сохрании
 
@@ -172,6 +171,11 @@ async function attempt3() {
     "body": JSON.stringify(body.value)
   }).then(res => {
     console.log(' РЕЗУАЛТАТ ', res)
+    if(res.ok){
+      // localStorage
+      console.log('body.value.id', body.value.id)
+
+    }
   })
 
   if (response.ok) {

@@ -1,7 +1,6 @@
 console.log('- - - - - - - - -content2 - - - - - -')
 let telefons=''
 function getAvitoData() {
-    console.log('s.e.n.d.R.e.s.p.o.n.s.e.')
     // со страниц https://www.avito.ru/kazan/avtomobili вытягивает заголовки, контент и id
     let data = []
     let fields = document.querySelectorAll('[data-marker="item"]')
@@ -32,7 +31,7 @@ function getAvitoData() {
         } catch (e) {
         }
         try {
-            text = el.querySelector('.iva-item-body-KLUuy').childNodes[5].textContent
+            text = el.textContent
         } catch (e) {
         }
         try {
@@ -98,15 +97,11 @@ let countTel = 0
 let pereskok = 0
 
 function getPhone() {
-    console.log('telefons', telefons)
-
-
     countTel++
-    console.log('countTel', countTel)
     // if (countTel == 3) getAvitoData();
-    if (countTel > 4) {
+    if (countTel > 8) {
 
-        console.log(' ИДЕМ НА последнюю ОПРАВКУ С ТЕЛЕФОНАМИ')
+        console.log(' ИДУ НА последнюю ОПРАВКУ С ТЕЛЕФОНАМИ')
         return getAvitoData();
     }
     let divs = document.querySelectorAll('[data-marker="item-phone-button/undefined"]')
@@ -121,8 +116,6 @@ function getPhone() {
         }
         else {
             // КЛИКАЕМ ВЫЩИПЫВАЕМ ТЕЛЕФОНЫ
-            console.log('К Л И К  А  Е  М ВЫЩИПЫВАЕМ ТЕЛЕФОНЫ pereskok', pereskok)
-             // getPhone(); // временоо чтобы быстро
            divs[pereskok].click()
         }
     }
