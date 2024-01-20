@@ -90,8 +90,10 @@ export async function attempt2() {
 /**
  * Буду добавлять новые порции, нужно удалить устаревшие
  */
-export function updateData(data, avitoData, avitoDataFiltered) {
-    Object.assign(avitoData.value, data)
-    console.log('LENGTH = ', avitoData.value.length)
-    avitoDataFiltered.value = [...avitoData.value]
-}
+// export function updateData(data, avitoData, avitoDataFiltered) {
+//     console.log('>>> 000 data', data)
+//
+//     avitoData.value = data
+//     console.log('LENGTH = ', avitoData.value.length)
+//     avitoDataFiltered.value = [...avitoData.value]
+// }

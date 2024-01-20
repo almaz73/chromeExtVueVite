@@ -5,7 +5,7 @@
         <span v-if="!isAutorization" class="note red">Не готово</span>
         <span v-else class="note green">✅Готово </span>
         Авторизоваться на
-        <a href="https://dev.autonet.pro/#/appeal/391850">
+        <a target="_blank" href="https://dev.autonet.pro/#/appeal/391850">
           dev.autonet.pro
         </a>
       </div>
@@ -15,7 +15,7 @@
         <span v-if="!isAvitoReady" class="note red">Не готово</span>
         <span v-else class="note green">✅Готово</span>
         Найти автомобили на
-        <a href="https://www.avito.ru/kazan/avtomobili?radius=100&searchRadius=100">
+        <a target="_blank" href="https://www.avito.ru/kazan/avtomobili?radius=100&searchRadius=100">
           avito.ru
         </a>
       </div>
@@ -54,6 +54,10 @@ function askData() {
   console.log('1. askData')
   sendQustionToContent({}, '1. Parsing site')
 }
+
+
+let text = localStorage.getItem('БАРАБАН')
+console.log('БАРАБАН = ', text)
 
 function askAccount() {
   console.log('2. askAccount')

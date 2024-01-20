@@ -4,17 +4,16 @@ chrome.runtime.onMessage.addListener( // this is the message listener
 
         switch (+request.split('.')[0]) {
             case 1:
-                if (location.pathname.includes("/avtomobili")) getAvitoData()
+                if (location.pathname.includes("/avtomobili")) {
+                    getAvitoData()
+                    getPhone()
+                }
                 chrome.runtime.sendMessage({"action": "openOptionsPage"}); // открываю вкладку опций
                 break
             case 2:
                 wichPageReady(sendResponse);
                 break
-            case 3:
-                // setClosePosition(request.split('.')[1]);
-                break
             default:
-                // toScrollIntoView(request);
         }
 
         return true
@@ -22,13 +21,10 @@ chrome.runtime.onMessage.addListener( // this is the message listener
 );
 
 
-
-
 // function toScrollIntoView(id) {
 //     var hiddenElement = document.getElementById(id);
 //     hiddenElement.scrollIntoView({block: "center", behavior: "smooth"});
 // }
-
 
 
 function wichPageReady(sendResponse) {

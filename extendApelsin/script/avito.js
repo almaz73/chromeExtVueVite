@@ -1,12 +1,15 @@
 console.log('- - - - - - - - -content2 - - - - - -')
-let data = []
 function getAvitoData() {
     console.log('s.e.n.d.R.e.s.p.o.n.s.e.')
     // со страниц https://www.avito.ru/kazan/avtomobili вытягивает заголовки, контент и id
+    let data = []
     let fields = document.querySelectorAll('[data-marker="item"]')
-
+    let count = 0
     fields && fields.forEach(el => {
-        let id, head, content, title, photo, price, link, time, text, diler, specific, corresponds;
+        count++
+        if (count > 15) return false
+
+        let id, head, content, title, photo, price, link, time, text, diler, specific, corresponds, tel;
         try {
             id = el.id
         } catch (e) {
@@ -25,7 +28,6 @@ function getAvitoData() {
         }
         try {
             photo = el.querySelector('[data-marker="item-photo"] img').src
-            console.log('>>>> photo', photo)
         } catch (e) {
         }
         try {
@@ -56,22 +58,20 @@ function getAvitoData() {
             specific = el.querySelector('[data-marker="item-specific-params"]').textContent
         } catch (e) {
         }
+        try {
+            tel = el.querySelector('[data-marker="item-contact"] img').src
+        } catch (e) {
+        }
 
 
-        data.push({id, title, content, head, photo, price, link, time, text, diler, specific, corresponds})
+        data.push({id, title, content, head, photo, price, link, time, text, diler, specific, corresponds, tel})
     })
 
 
+    console.log('ОТПРАВЛЯЮ ОТПРАВЛЯЮ ОТПРАВЛЯЮ , ', data)
     chrome.runtime && chrome.runtime.sendMessage({"action": "showData", data}); // передаю все данные
 
 
-    // пока не заработало, не ловит фокус
-    // console.log('пока не работает . фокусируюсь fields[0]', fields[0])
-    // fields[0].focus()
-    // fields[0].querySelectorAll('button')[1].click()
-    // console.log('НАЖАЛ ОТКРЫТИЕ ТЕЛЕФОНА')
-
-    // findWithoutPhoto()
 }
 
 
@@ -93,4 +93,18 @@ function getAvitoData() {
 //     hiddenElement.scrollIntoView({block: "center", behavior: "smooth"});
 // }
 
+let countTel = 0
+
+function getPhone() {
+    countTel++
+    console.log('countTel', countTel)
+    if (countTel == 3) getAvitoData();
+    if (countTel > 15) {
+        console.log(' ИДЕМ НА последнюю ОПРАВКУ С ТЕЛЕФОНАМИ')
+        return getAvitoData();
+    }
+    let divs = document.querySelectorAll('[data-marker="item-phone-button/undefined"]')
+    if (divs && divs[0]) divs[0].click()
+    setTimeout(() => getPhone(), parseInt(Math.random() * 5) * 1000 + 3000)
+}
 
