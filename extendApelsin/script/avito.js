@@ -1,4 +1,5 @@
 console.log('- - - - - - - - -content2 - - - - - -')
+let telefons=''
 function getAvitoData() {
     console.log('s.e.n.d.R.e.s.p.o.n.s.e.')
     // со страниц https://www.avito.ru/kazan/avtomobili вытягивает заголовки, контент и id
@@ -35,10 +36,6 @@ function getAvitoData() {
         } catch (e) {
         }
         try {
-            corresponds = el.querySelector('.iva-item-body-KLUu----------y').childNodes[3].textContent
-        } catch (e) {
-        }
-        try {
             price = el.querySelector('[data-marker="item-price"]').querySelector('[itemprop="price"]').content
         } catch (e) {
         }
@@ -62,7 +59,11 @@ function getAvitoData() {
             tel = el.querySelector('[data-marker="item-contact"] img').src
         } catch (e) {
         }
-
+        try {
+            corresponds = el.querySelectorAll('span')[2].textContent
+        } catch (e) {
+        }
+        document.querySelectorAll('[data-marker="item"]')[2].querySelectorAll('span')[2]
 
         data.push({id, title, content, head, photo, price, link, time, text, diler, specific, corresponds, tel})
     })
@@ -94,17 +95,37 @@ function getAvitoData() {
 // }
 
 let countTel = 0
+let pereskok = 0
 
 function getPhone() {
+    console.log('telefons', telefons)
+
+
     countTel++
     console.log('countTel', countTel)
-    if (countTel == 3) getAvitoData();
-    if (countTel > 15) {
+    // if (countTel == 3) getAvitoData();
+    if (countTel > 4) {
+
         console.log(' ИДЕМ НА последнюю ОПРАВКУ С ТЕЛЕФОНАМИ')
         return getAvitoData();
     }
     let divs = document.querySelectorAll('[data-marker="item-phone-button/undefined"]')
-    if (divs && divs[0]) divs[0].click()
+
+    if (divs && divs[0]) {
+        // тут если если телефон есть перескакиваем
+        if (telefons && telefons.includes(divs[pereskok].closest('[data-marker="item"]').id)) {
+            console.log('П Е Р Е С К А К И В А Е М')
+            pereskok++
+            getPhone();
+            return false
+        }
+        else {
+            // КЛИКАЕМ ВЫЩИПЫВАЕМ ТЕЛЕФОНЫ
+            console.log('К Л И К  А  Е  М ВЫЩИПЫВАЕМ ТЕЛЕФОНЫ pereskok', pereskok)
+             // getPhone(); // временоо чтобы быстро
+           divs[pereskok].click()
+        }
+    }
     setTimeout(() => getPhone(), parseInt(Math.random() * 5) * 1000 + 3000)
 }
 

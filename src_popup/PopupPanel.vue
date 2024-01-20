@@ -52,12 +52,22 @@ chrome.tabs && chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs =
 
 function askData() {
   console.log('1. askData')
-  sendQustionToContent({}, '1. Parsing site')
+  console.log('? ? ? ?telefons', telefons)
+  // здесть нужно отправить только список id
+  sendQustionToContent({}, '1. Parsing site|||'+telefons.map(el=>el.id).join(':::'))
 }
 
+let telefons;
+let text = localStorage.getItem('BARABAN_TELEFON')
+console.log('text', text)
 
-let text = localStorage.getItem('БАРАБАН')
-console.log('БАРАБАН = ', text)
+try {
+   telefons = text?JSON.parse(text):[]
+  console.log('BARABAN_TELEFON = ', text, telefons)
+}catch (e) {
+
+}
+
 
 function askAccount() {
   console.log('2. askAccount')
@@ -70,6 +80,7 @@ function askAccount() {
 }
 
 function sendQustionToContent(params, question, callback) {
+  console.log('callback', callback)
   // посылает запрос ко всем  вкладкам если в params не оговорено
   chrome.tabs.query(params, function (tabs) {
     for (let i = 0; i < tabs.length; i++) {

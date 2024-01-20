@@ -1,6 +1,9 @@
+
 chrome.runtime.onMessage.addListener( // this is the message listener
     function (request, sender, sendResponse) {
         console.log('>>получил>>>>>>>>>> запрос от расширения>' + request);
+        telefons = request.split('|||')[1]
+        console.log('t><><><>elefons', telefons)
 
         switch (+request.split('.')[0]) {
             case 1:

@@ -4,7 +4,7 @@ console.log('и внутри него chrome.runtime', chrome.runtime)
 let nameAccont = ''
 let data = []
 chrome.runtime.onMessage.addListener(function (message) {
-    console.log('message - - -', JSON.stringify(message))
+    // console.log('message - - -', JSON.stringify(message))
     switch (message.action) {
         case "openOptionsPage":
             openOptionsPage();
